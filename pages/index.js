@@ -60,11 +60,105 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
-        <meta name="description" content="Download high-quality professional virtual backgrounds for Zoom, Teams, and video calls. Perfect for remote work, home offices, executive meetings, and professional presentations." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      // Update your pages/index.js Head section with enhanced SEO:
+
+<Head>
+  <title>StreamBackdrops - Free Professional Virtual Backgrounds for Video Calls | Zoom, Teams, Google Meet</title>
+  <meta name="description" content="Download free professional virtual backgrounds for Zoom, Microsoft Teams, and Google Meet. High-quality home office, executive office, and conference room backgrounds perfect for remote work and business video calls." />
+  <meta name="keywords" content="virtual backgrounds, zoom backgrounds, teams backgrounds, professional video call backgrounds, home office backgrounds, remote work, virtual meeting backgrounds, free download" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  {/* Open Graph / Facebook */}
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://streambackdrops.com/" />
+  <meta property="og:title" content="StreamBackdrops - Free Professional Virtual Backgrounds" />
+  <meta property="og:description" content="Download free professional virtual backgrounds for video calls. Perfect for Zoom, Teams, and remote work." />
+  <meta property="og:image" content="https://streambackdrops.com/images/luxury-ceo-corner-office-1.webp" />
+  <meta property="og:site_name" content="StreamBackdrops" />
+  
+  {/* Twitter */}
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://streambackdrops.com/" />
+  <meta property="twitter:title" content="StreamBackdrops - Free Professional Virtual Backgrounds" />
+  <meta property="twitter:description" content="Download free professional virtual backgrounds for video calls. Perfect for Zoom, Teams, and remote work." />
+  <meta property="twitter:image" content="https://streambackdrops.com/images/luxury-ceo-corner-office-1.webp" />
+  
+  {/* Additional SEO */}
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="author" content="StreamBackdrops" />
+  <link rel="canonical" href="https://streambackdrops.com/" />
+  
+  {/* Structured Data */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "StreamBackdrops",
+        "description": "Professional virtual backgrounds for video calls and remote work",
+        "url": "https://streambackdrops.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://streambackdrops.com/category/{search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "StreamBackdrops",
+          "url": "https://streambackdrops.com"
+        }
+      })
+    }}
+  />
+  
+  {/* Product/Service Structured Data */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Professional Virtual Backgrounds",
+        "description": "Free high-quality virtual backgrounds for professional video calls including home offices, executive offices, conference rooms, and specialized workspace environments.",
+        "provider": {
+          "@type": "Organization",
+          "name": "StreamBackdrops",
+          "url": "https://streambackdrops.com"
+        },
+        "serviceType": "Virtual Background Downloads",
+        "areaServed": "Worldwide",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Virtual Background Categories",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Home Office Backgrounds"
+              }
+            },
+            {
+              "@type": "Offer", 
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Executive Office Backgrounds"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service", 
+                "name": "Conference Room Backgrounds"
+              }
+            }
+          ]
+        }
+      })
+    }}
+  />
+</Head>
 
       <div>
         <header>

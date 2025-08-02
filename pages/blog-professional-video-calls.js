@@ -1,15 +1,50 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
+import SEO from '../components/SEO';
 
 export default function BlogProfessionalVideoCalls() {
   return (
     <>
       <Head>
-        <title>10 Essential Tips for Professional Video Calls - StreamBackdrops</title>
-        <meta name="description" content="Master professional video calls with these 10 essential tips covering lighting, backgrounds, camera positioning, and video call etiquette for remote work success." />
-        <meta name="keywords" content="video calls, professional meetings, remote work, video conferencing, zoom tips, teams meetings" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        const blogStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "10 Essential Tips for Professional Video Calls",
+  "description": "Master professional video calls with these 10 essential tips covering lighting, backgrounds, camera positioning, and video call etiquette for remote work success.",
+  "image": "https://streambackdrops.com/images/luxury-ceo-corner-office-1.webp",
+  "author": {
+    "@type": "Organization",
+    "name": "StreamBackdrops"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "StreamBackdrops",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://streambackdrops.com/images/luxury-ceo-corner-office-1.webp"
+    }
+  },
+  "datePublished": "2025-08-02",
+  "dateModified": "2025-08-02",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://streambackdrops.com/blog-professional-video-calls"
+  },
+  "wordCount": 2500,
+  "articleSection": "Video Call Tips",
+  "keywords": ["professional video calls", "remote work", "video call tips", "zoom meetings", "virtual backgrounds"]
+};
+
+// Replace Head component with:
+<SEO
+  title="10 Essential Tips for Professional Video Calls"
+  description="Master professional video calls with these 10 essential tips covering lighting, backgrounds, camera positioning, and video call etiquette for remote work success."
+  keywords="professional video calls, video call tips, remote work tips, zoom tips, teams meetings, video conferencing, virtual meetings"
+  url="https://streambackdrops.com/blog-professional-video-calls"
+  type="article"
+  structuredData={blogStructuredData}
+/>
       </Head>
 
       <div className="min-h-screen bg-gray-50 py-12">

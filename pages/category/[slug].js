@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
+import SEO from '../../components/SEO';
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -168,8 +169,72 @@ export default function CategoryPage() {
   return (
     <>
       <Head>
-        <title>{category.name} Virtual Backgrounds - StreamBackdrops</title>
-        <meta name="description" content={`Download ${category.description.toLowerCase()}. High-quality ${category.name.toLowerCase()} backgrounds for Zoom, Teams, and professional video calls.`} />
+        const category = categoryInfo[slug];
+const categoryImage = categoryImages.length > 0 
+  ? `https://streambackdrops.com/images/${categoryImages[0].filename}`
+  : 'https://streambackdrops.com/images/luxury-ceo-corner-office-1.webp';
+
+// Enhanced meta descriptions for each category
+const seoDescriptions = {
+  'home-offices': 'Download free professional home office virtual backgrounds for Zoom, Teams, and video calls. High-quality backgrounds perfect for remote work and working from home.',
+  'executive-offices': 'Premium executive office virtual backgrounds for leadership meetings. Professional luxury office backgrounds that project authority and success in video calls.',
+  'conference-rooms': 'Professional conference room virtual backgrounds for team meetings and presentations. Modern meeting room backgrounds for Zoom, Teams, and business calls.',
+  'open-offices': 'Modern open office virtual backgrounds for collaborative video calls. Contemporary workspace backgrounds perfect for team meetings and startup environments.',
+  'lobbies': 'Professional lobby and reception virtual backgrounds for client meetings. Elegant entrance and waiting area backgrounds for business video calls.',
+  'private-offices': 'Specialized private office virtual backgrounds for consultations and professional meetings. Medical, legal, and therapy office backgrounds for confidential calls.'
+};
+
+const seoKeywords = {
+  'home-offices': 'home office virtual background, remote work background, work from home zoom background, professional home office, virtual office background',
+  'executive-offices': 'executive office background, luxury office virtual background, CEO office background, leadership meeting background, professional executive',
+  'conference-rooms': 'conference room background, meeting room virtual background, team meeting background, presentation background, business meeting',
+  'open-offices': 'open office background, modern workspace background, collaborative office, startup office background, contemporary workspace',
+  'lobbies': 'lobby background, reception background, business lobby, professional entrance, waiting room background',
+  'private-offices': 'private office background, consultation room background, medical office background, therapy office, professional consultation'
+};
+
+// Structured data for category pages
+const categoryStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": `${category.name} Virtual Backgrounds`,
+  "description": category.description,
+  "url": `https://streambackdrops.com/category/${slug}`,
+  "mainEntity": {
+    "@type": "ImageGallery",
+    "name": `${category.name} Background Collection`,
+    "description": `Professional ${category.name.toLowerCase()} virtual backgrounds for video calls`,
+    "numberOfItems": categoryImages.length
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://streambackdrops.com"
+      },
+      {
+        "@type": "ListItem", 
+        "position": 2,
+        "name": category.name,
+        "item": `https://streambackdrops.com/category/${slug}`
+      }
+    ]
+  }
+};
+
+// Replace your existing Head component with:
+<SEO
+  title={`${category.name} Virtual Backgrounds - Free Professional Downloads`}
+  description={seoDescriptions[slug] || category.description}
+  keywords={seoKeywords[slug] || ''}
+  image={categoryImage}
+  url={`https://streambackdrops.com/category/${slug}`}
+  type="website"
+  structuredData={categoryStructuredData}
+/>
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
