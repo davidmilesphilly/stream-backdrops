@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import SEO from '../../components/SEO';
 import OptimizedImage from '../../components/OptimizedImage';
+import SocialShare from '../../components/SocialShare';
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -240,6 +241,8 @@ export default function CategoryPage() {
         url={`https://streambackdrops.com/category/${slug}`}
         type="website"
         structuredData={categoryStructuredData}
+        pinterestDescription={`Free ${category.name.toLowerCase()} virtual backgrounds perfect for Zoom, Teams, and professional video calls. Download high-quality backgrounds for remote work and online meetings. #VirtualBackground #RemoteWork #${category.name.replace(/\s+/g, '')}`}
+        showPinterestSave={true}
       />
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
@@ -330,6 +333,36 @@ export default function CategoryPage() {
           </div>
         </section>
 
+        <section style={{padding: '2rem 0', background: 'white', borderBottom: '1px solid #e5e7eb'}}>
+          <div className="container">
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '1rem'
+            }}>
+              <div>
+                <h2 style={{fontSize: '1.25rem', fontWeight: '600', color: '#111827', marginBottom: '0.5rem'}}>
+                  Share {category.name} Backgrounds
+                </h2>
+                <p style={{color: '#6b7280', fontSize: '0.875rem'}}>
+                  Help others discover professional virtual backgrounds
+                </p>
+              </div>
+              
+              <SocialShare
+                url={`https://streambackdrops.com/category/${slug}`}
+                title={`${category.name} Virtual Backgrounds - Free Downloads`}
+                description={`Professional ${category.name.toLowerCase()} virtual backgrounds for video calls. Perfect for Zoom, Teams, and remote work.`}
+                image={categoryImage}
+                hashtags={['virtualbackground', 'remotework', category.name.toLowerCase().replace(/\s+/g, ''), 'videocalls']}
+                size="medium"
+              />
+            </div>
+          </div>
+        </section>
+
         <section style={{padding: '3rem 0'}}>
           <div className="container">
             {categoryImages.length === 0 ? (
@@ -378,6 +411,50 @@ export default function CategoryPage() {
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         priority={index < 3}
                       />
+                      
+                      <div style={{
+                        position: 'absolute',
+                        top: '0.5rem',
+                        left: '0.5rem',
+                        zIndex: 5
+                      }}>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(`https://streambackdrops.com/category/${slug}`)}&media=${encodeURIComponent(`https://streambackdrops.com/images/${image.filename}`)}&description=${encodeURIComponent(`${image.title} - Professional virtual background for video calls. Perfect for Zoom, Teams, and remote work. Free download from StreamBackdrops! #VirtualBackground #RemoteWork #ProfessionalMeeting`)}`;
+                            window.open(pinterestUrl, '_blank', 'width=600,height=400');
+                            
+                            if (typeof gtag !== 'undefined') {
+                              gtag('event', 'pinterest_save', {
+                                event_category: 'Social',
+                                event_label: image.title || image.filename,
+                                value: 1
+                              });
+                            }
+                          }}
+                          style={{
+                            background: '#E60023',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '32px',
+                            height: '32px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            opacity: 0.9,
+                            transition: 'opacity 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => e.target.style.opacity = 1}
+                          onMouseLeave={(e) => e.target.style.opacity = 0.9}
+                          title="Save to Pinterest"
+                          aria-label="Save to Pinterest"
+                        >
+                          📌
+                        </button>
+                      </div>
                       
                       <div style={{
                         position: 'absolute',
