@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import SEO from '../../components/SEO';
+import OptimizedImage from '../../components/OptimizedImage';
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -83,6 +84,15 @@ export default function CategoryPage() {
   };
 
   const handleDownload = async (image) => {
+    // Track download event for analytics
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'download', {
+        event_category: 'engagement',
+        event_label: image.title || image.filename,
+        value: image.isPremium ? 1 : 0
+      });
+    }
+
     if (image.isPremium) {
       handlePremiumPurchase(image);
       return;
@@ -165,77 +175,72 @@ export default function CategoryPage() {
   }
 
   const category = categoryInfo[slug];
+  const categoryImage = categoryImages.length > 0 
+    ? `https://streambackdrops.com/images/${categoryImages[0].filename}`
+    : 'https://streambackdrops.com/images/luxury-ceo-corner-office-1.webp';
+
+  // Enhanced meta descriptions for each category
+  const seoDescriptions = {
+    'home-offices': 'Download free professional home office virtual backgrounds for Zoom, Teams, and video calls. High-quality backgrounds perfect for remote work and working from home.',
+    'executive-offices': 'Premium executive office virtual backgrounds for leadership meetings. Professional luxury office backgrounds that project authority and success in video calls.',
+    'conference-rooms': 'Professional conference room virtual backgrounds for team meetings and presentations. Modern meeting room backgrounds for Zoom, Teams, and business calls.',
+    'open-offices': 'Modern open office virtual backgrounds for collaborative video calls. Contemporary workspace backgrounds perfect for team meetings and startup environments.',
+    'lobbies': 'Professional lobby and reception virtual backgrounds for client meetings. Elegant entrance and waiting area backgrounds for business video calls.',
+    'private-offices': 'Specialized private office virtual backgrounds for consultations and professional meetings. Medical, legal, and therapy office backgrounds for confidential calls.'
+  };
+
+  const seoKeywords = {
+    'home-offices': 'home office virtual background, remote work background, work from home zoom background, professional home office, virtual office background',
+    'executive-offices': 'executive office background, luxury office virtual background, CEO office background, leadership meeting background, professional executive',
+    'conference-rooms': 'conference room background, meeting room virtual background, team meeting background, presentation background, business meeting',
+    'open-offices': 'open office background, modern workspace background, collaborative office, startup office background, contemporary workspace',
+    'lobbies': 'lobby background, reception background, business lobby, professional entrance, waiting room background',
+    'private-offices': 'private office background, consultation room background, medical office background, therapy office, professional consultation'
+  };
+
+  // Structured data for category pages
+  const categoryStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `${category.name} Virtual Backgrounds`,
+    "description": category.description,
+    "url": `https://streambackdrops.com/category/${slug}`,
+    "mainEntity": {
+      "@type": "ImageGallery",
+      "name": `${category.name} Background Collection`,
+      "description": `Professional ${category.name.toLowerCase()} virtual backgrounds for video calls`,
+      "numberOfItems": categoryImages.length
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://streambackdrops.com"
+        },
+        {
+          "@type": "ListItem", 
+          "position": 2,
+          "name": category.name,
+          "item": `https://streambackdrops.com/category/${slug}`
+        }
+      ]
+    }
+  };
 
   return (
     <>
-      <Head>
-        const category = categoryInfo[slug];
-const categoryImage = categoryImages.length > 0 
-  ? `https://streambackdrops.com/images/${categoryImages[0].filename}`
-  : 'https://streambackdrops.com/images/luxury-ceo-corner-office-1.webp';
-
-// Enhanced meta descriptions for each category
-const seoDescriptions = {
-  'home-offices': 'Download free professional home office virtual backgrounds for Zoom, Teams, and video calls. High-quality backgrounds perfect for remote work and working from home.',
-  'executive-offices': 'Premium executive office virtual backgrounds for leadership meetings. Professional luxury office backgrounds that project authority and success in video calls.',
-  'conference-rooms': 'Professional conference room virtual backgrounds for team meetings and presentations. Modern meeting room backgrounds for Zoom, Teams, and business calls.',
-  'open-offices': 'Modern open office virtual backgrounds for collaborative video calls. Contemporary workspace backgrounds perfect for team meetings and startup environments.',
-  'lobbies': 'Professional lobby and reception virtual backgrounds for client meetings. Elegant entrance and waiting area backgrounds for business video calls.',
-  'private-offices': 'Specialized private office virtual backgrounds for consultations and professional meetings. Medical, legal, and therapy office backgrounds for confidential calls.'
-};
-
-const seoKeywords = {
-  'home-offices': 'home office virtual background, remote work background, work from home zoom background, professional home office, virtual office background',
-  'executive-offices': 'executive office background, luxury office virtual background, CEO office background, leadership meeting background, professional executive',
-  'conference-rooms': 'conference room background, meeting room virtual background, team meeting background, presentation background, business meeting',
-  'open-offices': 'open office background, modern workspace background, collaborative office, startup office background, contemporary workspace',
-  'lobbies': 'lobby background, reception background, business lobby, professional entrance, waiting room background',
-  'private-offices': 'private office background, consultation room background, medical office background, therapy office, professional consultation'
-};
-
-// Structured data for category pages
-const categoryStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": `${category.name} Virtual Backgrounds`,
-  "description": category.description,
-  "url": `https://streambackdrops.com/category/${slug}`,
-  "mainEntity": {
-    "@type": "ImageGallery",
-    "name": `${category.name} Background Collection`,
-    "description": `Professional ${category.name.toLowerCase()} virtual backgrounds for video calls`,
-    "numberOfItems": categoryImages.length
-  },
-  "breadcrumb": {
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://streambackdrops.com"
-      },
-      {
-        "@type": "ListItem", 
-        "position": 2,
-        "name": category.name,
-        "item": `https://streambackdrops.com/category/${slug}`
-      }
-    ]
-  }
-};
-
-// Replace your existing Head component with:
-<SEO
-  title={`${category.name} Virtual Backgrounds - Free Professional Downloads`}
-  description={seoDescriptions[slug] || category.description}
-  keywords={seoKeywords[slug] || ''}
-  image={categoryImage}
-  url={`https://streambackdrops.com/category/${slug}`}
-  type="website"
-  structuredData={categoryStructuredData}
-/>
-      </Head>
+      <SEO
+        title={`${category.name} Virtual Backgrounds - Free Professional Downloads`}
+        description={seoDescriptions[slug] || category.description}
+        keywords={seoKeywords[slug] || ''}
+        image={categoryImage}
+        url={`https://streambackdrops.com/category/${slug}`}
+        type="website"
+        structuredData={categoryStructuredData}
+      />
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
         <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '1rem 0'}}>
@@ -333,15 +338,21 @@ const categoryStructuredData = {
               </div>
             ) : (
               <div className="image-grid">
-                {categoryImages.map((image) => (
-                  <div key={image.key} className="image-card" style={{
-                    background: 'white',
-                    borderRadius: '0.75rem',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
-                    overflow: 'hidden',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    position: 'relative'
-                  }}>
+                {categoryImages.map((image, index) => (
+                  <article 
+                    key={image.key} 
+                    className="image-card" 
+                    style={{
+                      background: 'white',
+                      borderRadius: '0.75rem',
+                      boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
+                      overflow: 'hidden',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      position: 'relative'
+                    }}
+                    itemScope
+                    itemType="https://schema.org/ImageObject"
+                  >
                     {image.isPremium && (
                       <div style={{
                         position: 'absolute',
@@ -360,18 +371,12 @@ const categoryStructuredData = {
                     )}
                     
                     <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
-                      <img
-                        src={`/images/${image.filename}`}
-                        alt={image.alt || 'Virtual background'}
-                        className="image-preview premium-image"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          cursor: 'pointer'
-                        }}
+                      <OptimizedImage
+                        image={image}
                         onClick={() => setSelectedImage(image)}
-                        onContextMenu={(e) => e.preventDefault()}
+                        lazy={index > 6}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        priority={index < 3}
                       />
                       
                       <div style={{
@@ -403,6 +408,7 @@ const categoryStructuredData = {
                             fontWeight: '600',
                             cursor: 'pointer'
                           }}
+                          aria-label={`Preview ${image.title}`}
                         >
                           Preview
                         </button>
@@ -421,15 +427,19 @@ const categoryStructuredData = {
                             fontWeight: '600',
                             cursor: 'pointer'
                           }}
+                          aria-label={`Download ${image.title}`}
                         >
                           {image.isPremium ? `Buy $${image.price || '5.99'}` : 'Download'}
                         </button>
                       </div>
                     </div>
 
-                    <div style={{padding: '1.5rem'}}>
+                    <div style={{padding: '1.5rem'}} itemProp="description">
                       <div style={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
-                        <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}>
+                        <h3 
+                          style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}
+                          itemProp="name"
+                        >
                           {image.title || 'Virtual Background'}
                         </h3>
                         {image.resolution && (
@@ -450,19 +460,27 @@ const categoryStructuredData = {
                       </p>
                       <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
                         {(image.keywords || []).slice(0, 3).map(keyword => (
-                          <span key={keyword} style={{
-                            background: '#f3f4f6',
-                            color: '#374151',
-                            padding: '0.25rem 0.5rem',
-                            borderRadius: '0.25rem',
-                            fontSize: '0.75rem'
-                          }}>
+                          <span 
+                            key={keyword} 
+                            style={{
+                              background: '#f3f4f6',
+                              color: '#374151',
+                              padding: '0.25rem 0.5rem',
+                              borderRadius: '0.25rem',
+                              fontSize: '0.75rem'
+                            }}
+                            itemProp="keywords"
+                          >
                             {keyword}
                           </span>
                         ))}
                       </div>
                     </div>
-                  </div>
+                    
+                    <meta itemProp="contentUrl" content={`https://streambackdrops.com/images/${image.filename}`} />
+                    <meta itemProp="license" content="https://streambackdrops.com/terms" />
+                    <meta itemProp="acquireLicensePage" content="https://streambackdrops.com/terms" />
+                  </article>
                 ))}
               </div>
             )}
