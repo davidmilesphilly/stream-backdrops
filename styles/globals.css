@@ -1,13 +1,34 @@
+/* Performance optimizations */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Optimize font loading */
+@font-face {
+  font-family: 'System UI';
+  src: local('system-ui'), local('-apple-system'), local('BlinkMacSystemFont');
+  font-display: swap;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #f9fafb;
   line-height: 1.6;
+  /* Optimize text rendering */
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize images for performance */
+img {
+  max-width: 100%;
+  height: auto;
+  /* Improve image rendering performance */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .container {
@@ -122,6 +143,95 @@ footer h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: white;
+}
+
+/* Critical CSS inlining hint */
+.above-fold {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Lazy loading styles */
+.lazy {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lazy.loaded {
+  opacity: 1;
+}
+
+/* Optimize animations for 60fps */
+.smooth-animation {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Reduce layout shifts */
+.image-container {
+  position: relative;
+  overflow: hidden;
+  /* Prevent layout shift */
+  min-height: 200px;
+}
+
+/* Optimize hover effects */
+.hover-effect {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.hover-effect:hover {
+  transform: translateY(-2px);
+}
+
+/* Optimize loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Performance-optimized grid */
+.performance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  /* Use CSS containment for better performance */
+  contain: layout style paint;
+}
+
+/* Optimize scroll performance */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* Critical resource hints */
+.preload-hint {
+  /* Hint to browser this element is important */
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+}
+
+/* Premium image protection */
+.premium-image {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Mobile-first responsive improvements */
@@ -300,17 +410,6 @@ footer h3 {
   }
 }
 
-/* Premium image protection */
-.premium-image {
-  user-select: none;
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
 /* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
   .category-card,
@@ -322,6 +421,17 @@ footer h3 {
   .category-card:hover,
   .image-card:hover {
     transform: none;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .shimmer {
+    animation: none;
+    background: #f0f0f0;
   }
 }
 
@@ -343,5 +453,33 @@ textarea:focus {
   
   .feature-icon {
     border: 2px solid #000;
+  }
+}
+
+/* Optimize print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
+
+/* Optimize for dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Container query support when available */
+@supports (container-type: inline-size) {
+  .responsive-container {
+    container-type: inline-size;
   }
 }
